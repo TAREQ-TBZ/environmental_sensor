@@ -1,0 +1,49 @@
+/*
+ * Copyright (c) 2018-2019 Peter Bigot Consulting, LLC
+ * Copyright (c) 2024 Tareq Mhisen
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+    chosen {
+        ncs,zigbee-timer = &timer2;
+        ncs,zboss-trace-uart = &uart0;
+    };
+
+    aliases {
+        led0 = &led0;
+        sw0 = &button0;
+    };
+};
+
+&gpio0 {
+    status = "okay";
+    /*
+     * Currently edge interrupts are using GPIOTE events. Using GPIOTE events results in increased
+     * power consumption according to product specifications and erratas of some nRF MCUs. In case
+     * of nRF52833, it is <20uA in System ON Idle. Selecting GPIO SENSE option will allow to reduce
+     * power consumption.
+     */
+    sense-edge-mask = <0x00000800>; /* Enable SENSE for pin 11 (button0) */
+};
+
+
+&timer2 {
+    status = "okay";
+};
+
+/* Disable unused peripherals to reduce power consumption */
+&pwm0 {
+    status = "disabled";
+};
+&pwm1 {
+    status = "disabled";
+};
+
+&i2c0 {/* SDA P0.26, SCL P0.27, ALERT P1.10 */
+    sht3xd@44 {
+        compatible = "sensirion,sht3xd";
+        reg = <0x44>;
+        alert-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+    };
+};
