@@ -13,4 +13,5 @@ target_sources(app PRIVATE
     src/main.c
     src/humidity_temperature_svc.c
     src/user_interface.c
+    src/zigbee_svc.c
 )
