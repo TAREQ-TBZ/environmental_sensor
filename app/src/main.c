@@ -7,6 +7,7 @@
 #include <zephyr/logging/log.h>
 
 #include "humidity_temperature_svc.h"
+#include "zigbee_svc.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -20,6 +21,10 @@ int main(void)
 	if (ret != 0) {
 		LOG_ERR("Failed to initialize humidity and temperature service!");
 	}
+
+	zigbee_svc_init();
+
+	zigbee_svc_start();
 
 	return 0;
 }
