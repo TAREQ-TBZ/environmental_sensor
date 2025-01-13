@@ -1,17 +1,13 @@
-# 🌡️ Environmental Sensor - Zigbee & BLE IoT Device
+# 🌡️ Environmental Sensor - Zigbee Version
 
-## 📌 Overview
-
-A **low-power, wireless temperature and humidity sensor** designed for seamless integration with **Zigbee networks and Home Assistant**. If you need a **smart way to monitor indoor conditions** and receive timely **reminders to improve air quality**, this customizable IoT sensor is the perfect solution.
-
-Instead of purchasing a commercial device with limited customization, you can **build, modify, and tailor** this ultra-low-power sensor to suit your specific needs. In this project, I share the **design, source code, and hardware details**, giving you complete flexibility and control. 🚀  
-
----
+The BLE version can be found under: https://github.com/TAREQ-TBZ/ble_environmental_sensor
 
 ## ⚡ Key Features
 
 ✅ **Ultra-low power consumption** – Uses only **20µA on average**, powered by a **CR2032 coin cell** for long-lasting performance.  
 ✅ **Reliable wireless communication** – Built around the **nRF52833** microcontroller with a **2.45 GHz PCB monopole antenna**, supporting both **BLE and Zigbee**.  
+✅ **Built on Zephyr RTOS**, providing a modular and expandable architecture.
+✅ **Designed for easy expansion**, allowing additional sensors (e.g., pressure, gas) with minimal code modifications.  
 ✅ **High-precision sensing** – Incorporates the **Sensirion SHT40 sensor** with an accuracy of **±0.2°C** and **±1.8% RH**.  
 ✅ **Two buttons** (reset and user-defined functions, currently set for factory reset).  
 ✅ **Status LED** for easy monitoring.  
@@ -29,9 +25,7 @@ Instead of purchasing a commercial device with limited customization, you can **
 ### 📡 Zigbee Mode  
 
 - Functions as a **Zigbee sleepy end device**, ensuring low power consumption and seamless integration into existing Zigbee networks and **Home Assistant**.  
-- Built on **Zephyr RTOS**, providing a modular and expandable architecture.  
 - Supports configurable **device ID, vendor settings, and measurement intervals (TBD)**.  
-- Designed for easy expansion, allowing additional sensors (e.g., pressure, gas) with minimal code modifications.  
 
 | Adding to Home Assistant | Overview in Home Assistant |
 |-------------------------|-------------------------|
@@ -39,13 +33,15 @@ Instead of purchasing a commercial device with limited customization, you can **
 
 ### 📶 BLE Mode *(Upcoming Feature)*  
 
-For those without a Zigbee network, a **BLE beacon firmware** will enable the device to act as a **Bluetooth Low Energy temperature and humidity sensor**, transmitting real-time data directly to a smartphone.
+For those without a Zigbee network, a **BLE firmware** will enable the device to act as a **Bluetooth Low Energy temperature and humidity sensor**, transmitting real-time data directly to a smartphone.
+
+The BLE version can be found under: https://github.com/TAREQ-TBZ/ble_environmental_sensor
 
 ---
 
 ## 📢 Contribute & Customize
 
-This project is designed for flexibilit whether you want to tweak the firmware, modify the hardware, or add new features, you are encouraged to contribute, suggest improvements, or fork the project to fit your specific needs.
+This project is designed for flexibility whether you want to tweak the firmware, modify the hardware, or add new features, you are encouraged to contribute, suggest improvements, or fork the project to fit your specific needs.
 
 Let's build smarter, more personalized environmental monitoring together! 🌍🔧
 
