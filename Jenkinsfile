@@ -45,13 +45,15 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    ls
                     mkdir -p ws
                     python3 -m venv --copies ws/.venv
                     . ws/.venv/bin/activate
                     pip3 install west
 
-                    west init -m git@github.com:TAREQ-TBZ/env_sensor.git --mr main ws
+                    west init -m https://github.com/TAREQ-TBZ/environmental_sensor.git --mr main ws
                     cd ws
+                    ls
                     west update
 
                     pip3 install -r zephyr/scripts/requirements-base.txt
