@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    mkdir ws
+                    mkdir -p ws
                     python3 -m venv --copies ws/.venv
                     . ws/.venv/bin/activate
                     pip3 install west
