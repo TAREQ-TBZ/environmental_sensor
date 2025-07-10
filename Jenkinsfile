@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    triggers {
+        // This will poll the repository for any changes.
+        // The real trigger will be the webhook from GitHub.
+        pollSCM('')
+    }
+
     stages {
 
         stage('Clean Workspace') {
@@ -19,12 +25,16 @@ pipeline {
             steps {
                 script {
                     sh 'ls -al'
+                    sh 'git describe --tags'
                 }
             }
         }
 
 
         stage('Install Zephyr SDK') {
+            when {
+                tag "v*.*.*" // Example: v1.0.0, v2.3.1, etc. Adjust the pattern to match your tags.
+            }
             agent {
                 dockerfile {
                     filename 'Dockerfile'
