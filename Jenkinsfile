@@ -45,23 +45,19 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    pwd
                     ls
+                    rm -rf ws
                     mkdir -p ws
-                    python3 -m venv --copies ws/.venv
-                    . ws/.venv/bin/activate
-                    pip3 install west
-
                     west init -m https://github.com/TAREQ-TBZ/environmental_sensor.git --mr main ws
                     cd ws
                     ls
                     west update
 
-                    pip3 install -r zephyr/scripts/requirements-base.txt
-                    pip3 install -r zephyr/scripts/requirements-extras.txt
-                    pip3 install -r zephyr/scripts/requirements-build-test.txt
-                    pip3 install -r nrf/scripts/requirements-base.txt
-                    pip3 install -r nrf/scripts/requirements-build.txt
-                    pip3 install -r bootloader/mcuboot/scripts/requirements.txt
+                    pip install -r zephyr/scripts/requirements.txt
+                    pip install -r nrf/scripts/requirements.txt
+                    pip install -r bootloader/mcuboot/scripts/requirements.txt
+
                     ls
                     west build -b sham_nrf52833 application/app
                     ls application/app/build

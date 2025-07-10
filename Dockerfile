@@ -35,8 +35,9 @@ RUN pip3 install west
 RUN wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ZEPHYR_SDK_VERSION}/zephyr-sdk-${ZEPHYR_SDK_VERSION}_linux-x86_64_minimal.tar.xz && \
     tar -xf zephyr-sdk-${ZEPHYR_SDK_VERSION}_linux-x86_64_minimal.tar.xz && \
     rm zephyr-sdk-${ZEPHYR_SDK_VERSION}_linux-x86_64_minimal.tar.xz && \
-    mv zephyr-sdk-${ZEPHYR_SDK_VERSION} ${ZEPHYR_SDK_INSTALL_DIR} && \
-    ${ZEPHYR_SDK_INSTALL_DIR}/setup.sh -t arm-zephyr-eabi
+    ls && \
+    pwd && \
+    ./zephyr-sdk-0.16.5/setup.sh -t arm-zephyr-eabi
 
 # 4. Create the user and group, and set permissions
 RUN groupadd --gid $USER_GID $USER_NAME && \
@@ -45,3 +46,4 @@ RUN groupadd --gid $USER_GID $USER_NAME && \
 
 USER $USER_NAME
 WORKDIR /home/$USER_NAME
+
