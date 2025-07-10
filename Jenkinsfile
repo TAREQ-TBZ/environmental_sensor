@@ -39,9 +39,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile'
                     dir '.'
-                    // Do not use 'label' or 'additionalBuildArgs' here unless you REALLY need to; 
-                    // If you need to pass build args, do so like this:
-                    additionalBuildArgs '--build-arg USER_UID=$UID'
+                    additionalBuildArgs '--build-arg USER_UID=1000 --build-arg USER_GID=1000 --build-arg USER_NAME=jenkins'
                 }
             }
             steps {
@@ -52,12 +50,10 @@ pipeline {
                     . ws/.venv/bin/activate
                     pip3 install west
 
-                    # Initialize workspace
                     west init -m git@github.com:TAREQ-TBZ/env_sensor.git --mr main ws
                     cd ws
                     west update
 
-                    # Install additional requirements
                     pip3 install -r zephyr/scripts/requirements-base.txt
                     pip3 install -r zephyr/scripts/requirements-extras.txt
                     pip3 install -r zephyr/scripts/requirements-build-test.txt
@@ -68,6 +64,7 @@ pipeline {
                 }
             }
         }
+
         
         stage('Build Zephyr Application') {
             steps {

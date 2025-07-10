@@ -1,9 +1,9 @@
 # Use a specific Ubuntu version for better long-term stability
 FROM ubuntu:22.04
 
-ARG USER_NAME=user
-ARG USER_UID=1111
-ARG USER_GID=1111
+ARG USER_NAME=jenkins
+ARG USER_UID=1000
+ARG USER_GID=1000
 
 # Set environment variables to avoid interactive prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -43,7 +43,5 @@ RUN groupadd --gid $USER_GID $USER_NAME && \
     useradd --uid $USER_UID --gid $USER_GID --shell /bin/bash --create-home $USER_NAME && \
     chown -R $USER_UID:$USER_GID /home/$USER_NAME
 
-# default to $USER_NAME
 USER $USER_NAME
-
 WORKDIR /home/$USER_NAME
