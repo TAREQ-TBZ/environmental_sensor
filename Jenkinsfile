@@ -25,22 +25,25 @@ pipeline {
             steps {
                 script {
                     sh 'ls -al'
-                    sh 'git describe --tags'
+                   // sh 'git describe --tags'
                 }
             }
         }
 
 
         stage('Install Zephyr SDK') {
-            when {
-                tag "v*.*.*" // Example: v1.0.0, v2.3.1, etc. Adjust the pattern to match your tags.
-            }
+            // when {
+            //     tag "v*.*.*" // Example: v1.0.0, v2.3.1, etc. Adjust the pattern to match your tags.
+            // }
             agent {
                 dockerfile {
                     filename 'Dockerfile'
                     dir '.'
                     reuseNode true
-                    additionalBuildArgs '--build-arg USER_UID=1000 --build-arg USER_GID=1000 --build-arg USER_NAME=jenkins'
+                    additionalBuildArgs """
+                        --build-arg USER_UID=${sh(returnStdout: true, script: 'id -u').trim()}
+                        --build-arg USER_GID=${sh(returnStdout: true, script: 'id -g').trim()}
+                    """
                 }
             }
             steps {
