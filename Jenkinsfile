@@ -1,15 +1,5 @@
 pipeline {
     agent any
-    
-    environment {
-        ZEPHYR_TOOLCHAIN_VARIANT = 'zephyr'
-        ZEPHYR_SDK_VERSION       = '0.16.3'
-        ZEPHYR_SDK_INSTALL_DIR   = "${WORKSPACE}/zephyr-sdk-${ZEPHYR_SDK_VERSION}"
-        NRF_SDK_VERSION          = 'v2.6.0'
-        NRF_SDK_PATH             = "${WORKSPACE}/ncs"
-        BOARD                    = 'nrf52840dk_nrf52840'
-        APP_DIR                  = 'app'
-    }
 
     stages {
 
@@ -60,7 +50,7 @@ pipeline {
 
                     ls
                     west build -b sham_nrf52833 application/app
-                    ls /build/app/zephyr/
+                    ls build/zephyr/
                     '''
                 }
             }
@@ -68,8 +58,8 @@ pipeline {
 
         stage('Archive Artifacts') {
             steps {
-                dir('build/app/zephyr') {
-                archiveArtifacts artifacts: 'build/app/zephyr/*.hex, build/app/zephyr/*.elf', fingerprint: true
+                dir('ws/build/zephyr') {
+                    archiveArtifacts artifacts: '*.hex, *.elf', fingerprint: true
                 }
             }
         }
