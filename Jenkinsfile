@@ -62,20 +62,10 @@ pipeline {
                     pip3 install -r nrf/scripts/requirements-base.txt
                     pip3 install -r nrf/scripts/requirements-build.txt
                     pip3 install -r bootloader/mcuboot/scripts/requirements.txt
-                    '''
-                }
-            }
-        }
-
-        
-        stage('Build Zephyr Application') {
-            steps {
-                script {
-                    sh '''
-                    cd ${WORKSPACE}
-                    . ws/.venv/bin/activate
-                    cd ws
+                    ls
                     west build -b sham_nrf52833 application/app
+                    ls application/app/build
+                    ls application/app/build/zephyr
                     '''
                 }
             }
