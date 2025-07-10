@@ -9,7 +9,6 @@ pipeline {
         NRF_SDK_PATH             = "${WORKSPACE}/ncs"
         BOARD                    = 'nrf52840dk_nrf52840'
         APP_DIR                  = 'app'
-
     }
 
     stages {
@@ -20,24 +19,31 @@ pipeline {
             }
         }
 
-        stage('Install Zephyr SDK') {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Preflight Check') {
             steps {
                 script {
-                    sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y build-essential cmake ninja-build git python3-pip clang-tidy gcc-multilib
-                    pip3 install west
-
-                    wget -q https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ZEPHYR_SDK_VERSION}/zephyr-sdk-${ZEPHYR_SDK_VERSION}_linux-x86_64.tar.xz
-                    tar xf zephyr-sdk-${ZEPHYR_SDK_VERSION}_linux-x86_64.tar.xz
-                    ${ZEPHYR_SDK_INSTALL_DIR}/setup.sh -h -c
-                    ls
-                    '''
+                    sh 'ls -al'
                 }
             }
         }
 
-        stage('Setup the application') {
+
+        stage('Install Zephyr SDK') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir '.'
+                    // Do not use 'label' or 'additionalBuildArgs' here unless you REALLY need to; 
+                    // If you need to pass build args, do so like this:
+                    additionalBuildArgs '--build-arg USER_UID=$UID'
+                }
+            }
             steps {
                 script {
                     sh '''
@@ -62,7 +68,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Build Zephyr Application') {
             steps {
                 script {
