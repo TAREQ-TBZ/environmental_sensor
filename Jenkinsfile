@@ -60,8 +60,7 @@ pipeline {
 
                     ls
                     west build -b sham_nrf52833 application/app
-                    ls application/app/build
-                    ls application/app/build/zephyr
+                    ls /build/app/zephyr/
                     '''
                 }
             }
@@ -69,7 +68,9 @@ pipeline {
 
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'build/zephyr/*.hex, build/zephyr/*.elf', fingerprint: true
+                dir('build/app/zephyr') {
+                archiveArtifacts artifacts: 'build/app/zephyr/*.hex, build/app/zephyr/*.elf', fingerprint: true
+                }
             }
         }
     }
