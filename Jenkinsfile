@@ -29,6 +29,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile'
                     dir '.'
+                    reuseNode true
                     additionalBuildArgs '--build-arg USER_UID=1000 --build-arg USER_GID=1000 --build-arg USER_NAME=jenkins'
                 }
             }
